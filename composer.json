@@ -1,0 +1,26 @@
+{
+    "name": "zendframework/zendxml",
+    "description": "Utility library for XML usage and best practices in PHP",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "zf2",
+        "xml"
+    ],
+    "homepage": "http://packages.zendframework.com/",
+    "autoload": {
+        "psr-0": {
+            "ZendXml": "library/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    }
+}
+
