@@ -123,6 +123,12 @@ XML;
         $this->assertTrue($result->validate());
     }
 
+    public function testIsPhpFpm()
+    {
+    	// False because we execute PHPUnit from CLI
+    	$this->assertFalse(XmlSecurity::isPhpFpm());	
+    }
+    
     protected function _getXml()
     {
         return <<<XML

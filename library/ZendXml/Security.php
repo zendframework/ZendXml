@@ -28,14 +28,19 @@ class Security
             $dom = new DOMDocument();
         } 
 
-        // Disable entity load
-        $loadEntities = libxml_disable_entity_loader(true);
-        $useInternalXmlErrors = libxml_use_internal_errors(true);
+        // Disable entity load if PHP-FPM is not running
+        // @see https://bugs.php.net/bug.php?id=64938
+        if (!self::isPhpFpm()) {
+        	$loadEntities = libxml_disable_entity_loader(true);
+        	$useInternalXmlErrors = libxml_use_internal_errors(true);
+        }
 
         if (!$dom->loadXml($xml)) {
             // Entity load to previous setting
-            libxml_disable_entity_loader($loadEntities);
-            libxml_use_internal_errors($useInternalXmlErrors);
+            if (!self::isPhpFpm()) {
+            	libxml_disable_entity_loader($loadEntities);
+            	libxml_use_internal_errors($useInternalXmlErrors);
+            }
             return false;
         }
 
@@ -51,8 +56,10 @@ class Security
         }
 
         // Entity load to previous setting
-        libxml_disable_entity_loader($loadEntities);
-        libxml_use_internal_errors($useInternalXmlErrors);
+        if (!self::isPhpFpm()) { 
+        	libxml_disable_entity_loader($loadEntities);
+        	libxml_use_internal_errors($useInternalXmlErrors);
+        }
 
         if (isset($simpleXml)) {
             $result = simplexml_import_dom($dom); 
@@ -80,5 +87,18 @@ class Security
             );
         }
         return self::scan(file_get_contents($file), $dom);
+    }
+    
+    /**
+     * Return true if PHP is running with PHP-FPM
+     * 
+     * @return boolean
+     */
+    public static function isPhpFpm()
+    {
+    	if (substr(php_sapi_name(), 0, 3) === 'fpm') {
+    		return true;
+    	}
+    	return false;
     }
 }
