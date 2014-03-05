@@ -57,7 +57,16 @@ class Security
 
         // Load XML with network access disabled (LIBXML_NONET)
         // error disabled with @ for PHP-FPM scenario
-        if (!@$dom->loadXml($xml, LIBXML_NONET)) {
+        set_error_handler(function ($errno, $errstr) {
+            if (substr_count($errstr, 'DOMDocument::loadXML()') > 0) {
+                return true;
+            }
+            return false;
+        }, E_WARNING);
+        $result = $dom->loadXml($xml, LIBXML_NONET);
+        restore_error_handler();
+
+        if (!$result) {
             // Entity load to previous setting
             if (!self::isPhpFpm()) {
             	libxml_disable_entity_loader($loadEntities);
