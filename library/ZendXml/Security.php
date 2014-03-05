@@ -13,6 +13,21 @@ use SimpleXMLElement;
 
 class Security
 {
+	const ENTITY_DETECT = 'Detected use of ENTITY in XML, disabled to prevent XXE/XEE attacks';
+
+    /**
+     * Heuristic scan to detect entity in XML
+     *
+     * @param  string $xml
+     * @throws Exception\RuntimeException
+     */
+    protected static function heuristicScan($xml)
+    {
+        if (strpos($xml, '<!ENTITY') !== false) {
+            throw new Exception\RuntimeException(self::ENTITY_DETECT);
+        }
+    }
+
     /**
      * Scan XML string for potential XXE and XEE attacks 
      *
@@ -22,20 +37,27 @@ class Security
      * @return  SimpleXMLElement|DomDocument|boolean
      */
     public static function scan($xml, DOMDocument $dom = null)
-    {
+    {   	
+        // If running with PHP-FPM we perform an heuristic scan
+        // We cannot use libxml_disable_entity_loader because of this bug
+        // @see https://bugs.php.net/bug.php?id=64938
+        if (self::isPhpFpm()) {
+            self::heuristicScan($xml);
+        }
+
         if (null === $dom) {
             $simpleXml = true;
             $dom = new DOMDocument();
         } 
 
-        // Disable entity load if PHP-FPM is not running
-        // @see https://bugs.php.net/bug.php?id=64938
         if (!self::isPhpFpm()) {
         	$loadEntities = libxml_disable_entity_loader(true);
         	$useInternalXmlErrors = libxml_use_internal_errors(true);
         }
 
-        if (!$dom->loadXml($xml)) {
+        // Load XML with network access disabled (LIBXML_NONET)
+        // error disabled with @ for PHP-FPM scenario
+        if (!@$dom->loadXml($xml, LIBXML_NONET)) {
             // Entity load to previous setting
             if (!self::isPhpFpm()) {
             	libxml_disable_entity_loader($loadEntities);
@@ -44,15 +66,15 @@ class Security
             return false;
         }
 
-        // Scan for potential XEE attacks using Entity
-        foreach ($dom->childNodes as $child) {
-            if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-                if ($child->entities->length > 0) {
-                    throw new Exception\RuntimeException(
-                        'Detected use of ENTITY_NODE in XML, disabled to prevent XEE attacks'
-                    );
-                }
-            }
+        // Scan for potential XEE attacks using ENTITY, if not PHP-FPM
+        if (!self::isPhpFpm()) {
+	        foreach ($dom->childNodes as $child) {
+	            if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
+	                if ($child->entities->length > 0) {
+	                    throw new Exception\RuntimeException(self::ENTITY_DETECT);
+	                }
+	            }
+	        }
         }
 
         // Entity load to previous setting
