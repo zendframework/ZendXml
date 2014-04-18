@@ -11,7 +11,7 @@
     "homepage": "http://packages.zendframework.com/",
     "autoload": {
         "psr-0": {
-            "ZendXml": "library/"
+            "ZendXml\\": "library/"
         }
     },
     "repositories": [
