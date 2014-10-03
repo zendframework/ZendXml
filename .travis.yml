@@ -5,10 +5,16 @@ php:
   - 5.5
   - 5.6
   - hhvm
- 
+
 matrix:
     allow_failures:
         - php: hhvm
+
+before_install:
+  # need to update libxml to 2.7.8 to be able to run tests using the
+  # LIBXML_HTML_NODEFDTD and LIBXML_HTML_NOIMPLIED libxml constant
+  - sudo apt-get update
+  - sudo apt-get -o DPkg::Options::="--force-confold" -y upgrade
 
 before_script:
   - composer self-update
@@ -17,7 +23,7 @@ before_script:
 script:
   - ./vendor/bin/phpunit -c ./tests
   - ./vendor/bin/phpcs --standard=PSR2 --ignore=tests/Bootstrap.php library tests
-  
+
 notifications:
   irc: "irc.freenode.org#zftalk.dev"
   email: false

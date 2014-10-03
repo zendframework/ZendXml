@@ -72,6 +72,23 @@ XML;
         $this->assertEquals($node->nodeValue, 'test');
     }
 
+    /**
+     * @requires PHP 5.4
+     */
+    public function testScanDomHTML()
+    {
+        // loadHtml accepts constants in php >= 5.4
+        // http://php.net/manual/de/domdocument.loadhtml.php
+        $dom = new DOMDocument('1.0');
+        $html = <<<HTML
+<p>a simple test</p>
+HTML;
+        $constants = LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED;
+        $result = XmlSecurity::scanHtml($html, $dom, $constants);
+        $this->assertTrue($result instanceof DOMDocument);
+        $this->assertEquals($html, trim($result->saveHtml()));
+    }
+
     public function testScanInvalidXml()
     {
         $xml = <<<XML
