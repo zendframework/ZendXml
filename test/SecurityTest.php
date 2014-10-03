@@ -72,6 +72,18 @@ XML;
         $this->assertEquals($node->nodeValue, 'test');
     }
 
+    public function testScanDomHTML()
+    {
+        $dom = new DOMDocument('1.0');
+        $html = <<<HTML
+<p>a simple test</p>
+HTML;
+        $constants = LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED;
+        $result = XmlSecurity::scanHtml($html, $dom, $constants);
+        $this->assertTrue($result instanceof DOMDocument);
+        $this->assertEquals($html, trim($result->saveHtml()));
+    }
+
     public function testScanInvalidXml()
     {
         $xml = <<<XML
