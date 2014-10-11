@@ -29,7 +29,7 @@
         }
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "*@dev",
+        "fabpot/php-cs-fixer": "~1.0@dev",
         "phpunit/phpunit": "~3.7"
     }
 }
