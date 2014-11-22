@@ -11,7 +11,12 @@
     "homepage": "http://packages.zendframework.com/",
     "autoload": {
         "psr-0": {
-            "ZendXml": "library/"
+            "ZendXml\\": "library/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendTest\\Xml\\": "tests/ZendXmlTest/"
         }
     },
     "repositories": [
