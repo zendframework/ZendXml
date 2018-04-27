@@ -1,19 +1,19 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/ZendXml for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/ZendXml/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Xml;
 
-use ZendXml\Security as XmlSecurity;
-use ZendXml\Exception;
+namespace ZendXmlTest;
+
 use DOMDocument;
+use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
+use ZendXml\Exception;
+use ZendXml\Security as XmlSecurity;
 
-class SecurityTest extends \PHPUnit_Framework_TestCase
+class SecurityTest extends TestCase
 {
     /**
      * @expectedException ZendXml\Exception\RuntimeException
@@ -28,7 +28,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
 </results>
 XML;
 
-        $this->setExpectedException('ZendXml\Exception\RuntimeException');
+        $this->expectException('ZendXml\Exception\RuntimeException');
         $result = XmlSecurity::scan($xml);
     }
 
