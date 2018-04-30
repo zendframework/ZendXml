@@ -1,32 +1,29 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/ZendXml for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/ZendXml/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Xml;
 
-use ZendXml\Security as XmlSecurity;
-use ZendXml\Exception;
-use DOMDocument;
+namespace ZendXmlTest;
+
+use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
-use SimpleXMLElement;
+use ZendXml\Exception;
 
 /**
  * @group ZF2015-06
  */
-class MultibyteTest extends \PHPUnit_Framework_TestCase
+class MultibyteTest extends TestCase
 {
     public function multibyteEncodings()
     {
-        return array(
-            'UTF-16LE' => array('UTF-16LE', pack('CC', 0xff, 0xfe), 3),
-            'UTF-16BE' => array('UTF-16BE', pack('CC', 0xfe, 0xff), 3),
-            'UTF-32LE' => array('UTF-32LE', pack('CCCC', 0xff, 0xfe, 0x00, 0x00), 4),
-            'UTF-32BE' => array('UTF-32BE', pack('CCCC', 0x00, 0x00, 0xfe, 0xff), 4),
-        );
+        return [
+            'UTF-16LE' => ['UTF-16LE', pack('CC', 0xff, 0xfe), 3],
+            'UTF-16BE' => ['UTF-16BE', pack('CC', 0xfe, 0xff), 3],
+            'UTF-32LE' => ['UTF-32LE', pack('CCCC', 0xff, 0xfe, 0x00, 0x00), 4],
+            'UTF-32BE' => ['UTF-32BE', pack('CCCC', 0x00, 0x00, 0xfe, 0xff), 4],
+        ];
     }
 
     public function getXmlWithXXE()
@@ -66,7 +63,8 @@ XML;
         $xml = str_replace('{ENCODING}', $encoding, $xml);
         $xml = iconv('UTF-8', $encoding, $xml);
         $this->assertNotSame(0, strncmp($xml, $bom, $bomLength));
-        $this->setExpectedException('ZendXml\Exception\RuntimeException', 'ENTITY');
+        $this->expectException('ZendXml\Exception\RuntimeException');
+        $this->expectExceptionMessage('ENTITY');
         $this->invokeHeuristicScan($xml);
     }
 
@@ -79,7 +77,8 @@ XML;
         $xml  = str_replace('{ENCODING}', $encoding, $xml);
         $orig = iconv('UTF-8', $encoding, $xml);
         $xml  = $bom . $orig;
-        $this->setExpectedException('ZendXml\Exception\RuntimeException', 'ENTITY');
+        $this->expectException('ZendXml\Exception\RuntimeException');
+        $this->expectExceptionMessage('ENTITY');
         $this->invokeHeuristicScan($xml);
     }
 
@@ -119,7 +118,8 @@ XML;
         $xml = str_replace('{ENCODING}', 'UTF-8', $xml);
         $xml = iconv('UTF-8', $encoding, $xml);
         $xml = $bom . $xml;
-        $this->setExpectedException('ZendXml\Exception\RuntimeException', 'ENTITY');
+        $this->expectException('ZendXml\Exception\RuntimeException');
+        $this->expectExceptionMessage('ENTITY');
         $this->invokeHeuristicScan($xml);
     }
 }
