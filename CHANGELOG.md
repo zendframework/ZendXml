@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.1.0 - TBD
+## 1.1.0 - 2018-04-30
 
 ### Added
+
+- [#13](https://github.com/zendframework/ZendXml/pull/13) adds support for PHP 7.1 and 7.2.
+
+### Changed
 
 - Nothing.
 
@@ -14,25 +18,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#13](https://github.com/zendframework/ZendXml/pull/13) removes support for PHP 5.3, 5.4, and 5.5.
 
-### Fixed
-
-- Nothing.
-
-## 1.0.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
+- [#13](https://github.com/zendframework/ZendXml/pull/13) removes support for HHVM.
 
 ### Fixed
 
