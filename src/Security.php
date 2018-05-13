@@ -145,7 +145,7 @@ class Security
             )
         );
 
-        if (substr(php_sapi_name(), 0, 3) === 'fpm' && $isVulnerableVersion) {
+        if (0 === strpos(php_sapi_name(), 'fpm') && $isVulnerableVersion) {
             return true;
         }
         return false;
