@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.2.0 - 2019-01-22
+
+### Added
+
+- [#6](https://github.com/zendframework/zendxml/pull/6) adds the following method:
+ 
+  ```php
+  Security::scanHtml(
+      string $html,
+      DOMDocument $dom = null,
+      int $libXmlConstants = 0
+  ) : SimpleXMLElement|DOMDocument|bool
+  ```
+  
+  This method allows scanning markup known to be HTML, versus assuming the
+  markup is generic XML.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.1.1 - 2019-01-22
 
 ### Added
