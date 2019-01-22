@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#17](https://github.com/zendframework/ZendXml/pull/13) properly enables heuristic security checks for PHP 5.6.0-5.6.5 when PHP is running as PHP-FPM.
+- [#17](https://github.com/zendframework/ZendXml/pull/17) properly enables heuristic security checks for PHP 5.6.0 - 5.6.5 when PHP
+  is running as PHP-FPM.
 
 ## 1.1.0 - 2018-04-30
 
