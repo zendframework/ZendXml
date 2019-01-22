@@ -2,33 +2,11 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.2.0 - TBD
+## 1.1.1 - 2019-01-22
 
 ### Added
 
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.1.1 - TBD
-
-### Added
-
-- Nothing.
+- [#16](https://github.com/zendframework/ZendXml/pull/16) adds support for PHP 7.3.
 
 ### Changed
 
