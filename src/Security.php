@@ -140,7 +140,7 @@ class Security
         $isVulnerableVersion = version_compare(PHP_VERSION, '5.6', 'ge')
             && version_compare(PHP_VERSION, '5.6.6', 'lt');
 
-        if (substr(php_sapi_name(), 0, 3) === 'fpm' && $isVulnerableVersion) {
+        if (0 === strpos(php_sapi_name(), 'fpm') && $isVulnerableVersion) {
             return true;
         }
         return false;
