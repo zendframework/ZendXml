@@ -6,7 +6,18 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#6](https://github.com/zendframework/zendxml/pull/6) adds the following method:
+ 
+  ```php
+  Security::scanHtml(
+      string $html,
+      DOMDocument $dom = null,
+      int $libXmlConstants = 0
+  ) : SimpleXMLElement|DOMDocument|bool
+  ```
+  
+  This method allows scanning markup known to be HTML, versus assuming the
+  markup is generic XML.
 
 ### Changed
 
