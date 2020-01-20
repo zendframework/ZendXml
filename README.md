@@ -2,7 +2,7 @@
 
 > ## Repository abandoned 2019-12-31
 >
-> This repository has moved to laminas/laminas-xml.
+> This repository has moved to [laminas/laminas-xml](https://github.com/laminas/laminas-xml).
 
 [![Build Status](https://secure.travis-ci.org/zendframework/ZendXml.svg?branch=master)](https://secure.travis-ci.org/zendframework/ZendXml)
 [![Coverage Status](https://coveralls.io/repos/github/zendframework/ZendXml/badge.svg?branch=master)](https://coveralls.io/github/zendframework/ZendXml?branch=master)
